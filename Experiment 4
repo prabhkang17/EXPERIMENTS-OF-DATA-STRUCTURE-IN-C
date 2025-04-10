@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct node {
+    int info;
+    struct node *next;
+} node;
+
+typedef struct {
+    struct node *TOP;
+} stack;
+
+
+stack* makeStack(void) {
+    stack *s;
+    s = (stack*)malloc(sizeof(stack));
+    s->TOP=NULL;  
+    return s;
+}
+
+
+void push(stack *s, int v) {
+    node n = (node)malloc(sizeof(node));  
+    n->info = v;
+    n->next = s->TOP;  
+    s->TOP=n;       
+}
+
+
+int pop(stack *s) {
+    if (s->TOP == NULL) {
+        printf("Stack not flow\n");
+        return -1;  
+    }
+    
+    node *temp = s->TOP;  
+    int value = temp->info;  
+    
+    s->TOP = s->TOP->next;  
+    free(temp);  
+    return value;  
+}
+
+
+void PEEP(stack *s) {
+    node *t;
+    t= s->TOP;
+        printf("%d\n", t->info);
+}
+
+
+int main() {
+    stack *st = makeStack();  
+
+
+    push(st, 10);
+    push(st, 20);
+    push(st, 30);
+    push(st,40);
+    push(st,50);
+
+    printf("Stack after push operations: ");
+    PEEP(st);
+
+    
+    int poppedValue = pop(st);
+    printf("Popped value: %d\n", poppedValue);
+
+    printf("Stack after pop operation: ");
+    PEEP(st);
+
+    return 0;
+}
